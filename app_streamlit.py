@@ -1,6 +1,7 @@
 import sys
 import types
 import os
+os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 import importlib.util
 
 # Compatibility shim jika pkg_resources tidak ada di environment (misal di uv / modern Python)
