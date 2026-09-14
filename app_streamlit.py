@@ -1,3 +1,23 @@
+import sys
+import types
+import os
+import importlib.util
+
+# Compatibility shim jika pkg_resources tidak ada di environment (misal di uv / modern Python)
+if "pkg_resources" not in sys.modules:
+    try:
+        import pkg_resources
+    except ImportError:
+        mock_pkg = types.ModuleType("pkg_resources")
+        def _resource_filename(package_or_req, resource_name):
+            spec = importlib.util.find_spec(package_or_req)
+            if spec and spec.origin:
+                base_dir = os.path.dirname(spec.origin)
+                return os.path.join(base_dir, resource_name)
+            return resource_name
+        mock_pkg.resource_filename = _resource_filename
+        sys.modules["pkg_resources"] = mock_pkg
+
 import cv2
 import numpy as np
 import streamlit as st
@@ -5,6 +25,7 @@ import pandas as pd
 from PIL import Image
 import time
 from fer import FER
+
 
 # -------------------------------------------------------------
 # Konfigurasi Halaman Streamlit
