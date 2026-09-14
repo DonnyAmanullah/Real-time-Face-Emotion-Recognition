@@ -1,0 +1,606 @@
+/* ================================================================
+   App.css — FaceEmo Futuristic HUD Theme
+   ================================================================ */
+
+/* ── CSS Variables ─────────────────────────────────────────────── */
+:root {
+  --c-cyan     : #00c4ff;
+  --c-green    : #00c878;
+  --c-red      : #ff4060;
+  --c-amber    : #ffb020;
+  --c-blue     : #4098ff;
+  --c-gold     : #c8a000;
+  --c-gray     : #7a8898;
+  --c-pink     : #f060b0;
+  --bg-0       : #020910;
+  --bg-1       : #010609;
+  --bg-2       : #020b14;
+  --bg-3       : #0d1825;
+  --border-c   : rgba(0, 196, 255, 0.15);
+  --border-c-s : rgba(0, 196, 255, 0.35);
+}
+
+/* ── Base App ──────────────────────────────────────────────────── */
+.App {
+  min-height      : 100vh;
+  background      : var(--bg-0);
+  display         : flex;
+  flex-direction  : column;
+  color           : #e0f0ff;
+  font-family     : 'Share Tech Mono', 'Courier New', monospace;
+  position        : relative;
+  overflow        : hidden;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════════════════════════════ */
+.hud-nav {
+  display         : flex;
+  align-items     : center;
+  justify-content : space-between;
+  padding         : 12px 36px;
+  background      : var(--bg-1);
+  border-bottom   : 1px solid var(--border-c);
+  position        : relative;
+  z-index         : 100;
+  flex-shrink     : 0;
+}
+
+.brand {
+  display    : flex;
+  align-items: center;
+  gap        : 14px;
+}
+
+.brand-icon {
+  width           : 38px;
+  height          : 38px;
+  border          : 1px solid var(--border-c-s);
+  border-radius   : 9px;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  font-size       : 19px;
+  flex-shrink     : 0;
+  animation       : iconPulse 3s ease-in-out infinite;
+}
+
+.brand-text {
+  display       : flex;
+  flex-direction: column;
+  gap           : 3px;
+}
+
+.brand-name {
+  font-family   : 'Orbitron', sans-serif;
+  font-weight   : 900;
+  font-size     : 15px;
+  color         : var(--c-cyan);
+  letter-spacing: 3px;
+  line-height   : 1;
+}
+
+.brand-tagline {
+  font-size     : 9px;
+  color         : rgba(0, 196, 255, 0.38);
+  letter-spacing: 3.5px;
+  line-height   : 1;
+}
+
+.nav-right {
+  display    : flex;
+  align-items: center;
+  gap        : 18px;
+}
+
+.sys-clock-label {
+  font-size: 11px;
+  color    : rgba(0, 196, 255, 0.42);
+}
+
+.sys-clock-value {
+  color         : var(--c-cyan);
+  letter-spacing: 1px;
+}
+
+.status-badge {
+  display      : flex;
+  align-items  : center;
+  gap          : 8px;
+  border       : 1px solid rgba(0, 200, 120, 0.3);
+  border-radius: 99px;
+  padding      : 6px 14px;
+}
+
+.status-dot {
+  width        : 7px;
+  height       : 7px;
+  border-radius: 50%;
+  background   : rgba(255, 255, 255, 0.2);
+  flex-shrink  : 0;
+  transition   : background 0.4s;
+}
+
+.status-dot.connected {
+  background: var(--c-green);
+  box-shadow: 0 0 8px var(--c-green);
+  animation : blinkDot 2.5s infinite;
+}
+
+.status-label {
+  font-family   : 'Orbitron', sans-serif;
+  font-size     : 9px;
+  font-weight   : 700;
+  color         : var(--c-green);
+  letter-spacing: 2.5px;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MAIN LAYOUT
+════════════════════════════════════════════════════════════════ */
+.hud-main {
+  flex            : 1;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  gap             : 28px;
+  padding         : 32px 40px;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CAMERA SECTION
+════════════════════════════════════════════════════════════════ */
+.cam-section {
+  display       : flex;
+  flex-direction: column;
+  gap           : 14px;
+  flex-shrink   : 0;
+}
+
+/* Container utama kamera — position:relative + overflow:hidden
+   agar scan line dan elemen absolut terkurung di dalamnya */
+.cam-inner {
+  position     : relative;
+  width        : 640px;
+  height       : 480px;
+  background   : #000;
+  border-radius: 10px;
+  overflow     : hidden;
+  border       : 1px solid var(--border-c-s);
+  box-shadow   : 0 0 0 1px rgba(0,196,255,0.06),
+                 0 24px 60px rgba(0,0,0,0.85);
+}
+
+/* ── Corner Brackets (sudut HUD) ───────────────────────────────── */
+.corner {
+  position      : absolute;
+  width         : 24px;
+  height        : 24px;
+  z-index       : 20;
+  pointer-events: none;
+}
+
+.corner-tl {
+  top       : 14px;
+  left      : 14px;
+  border-top : 2px solid var(--c-cyan);
+  border-left: 2px solid var(--c-cyan);
+  box-shadow : -3px -3px 10px rgba(0,196,255,0.45);
+}
+
+.corner-tr {
+  top        : 14px;
+  right      : 14px;
+  border-top  : 2px solid var(--c-cyan);
+  border-right: 2px solid var(--c-cyan);
+  box-shadow  : 3px -3px 10px rgba(0,196,255,0.45);
+}
+
+.corner-bl {
+  bottom     : 28px;
+  left       : 14px;
+  border-bottom: 2px solid var(--c-cyan);
+  border-left  : 2px solid var(--c-cyan);
+  box-shadow   : -3px 3px 10px rgba(0,196,255,0.45);
+}
+
+.corner-br {
+  bottom      : 28px;
+  right       : 14px;
+  border-bottom: 2px solid var(--c-cyan);
+  border-right : 2px solid var(--c-cyan);
+  box-shadow   : 3px 3px 10px rgba(0,196,255,0.45);
+}
+
+/* ── Scan Line ─────────────────────────────────────────────────── */
+.scan-line {
+  position      : absolute;
+  top           : -2px;
+  left          : 0;
+  right         : 0;
+  height        : 2px;
+  background    : linear-gradient(
+    90deg,
+    transparent               0%,
+    rgba(0,196,255,0.3)      15%,
+    rgba(0,196,255,0.95)     50%,
+    rgba(0,196,255,0.3)      85%,
+    transparent              100%
+  );
+  box-shadow    : 0 0 14px rgba(0,196,255,0.7),
+                  0 0  3px rgba(0,196,255,1.0);
+  animation     : scanMove 3s linear infinite;
+  z-index       : 15;
+  pointer-events: none;
+}
+
+/* ── Camera Overlay Text ───────────────────────────────────────── */
+.cam-target-tag {
+  position      : absolute;
+  top           : 14px;
+  left          : 50%;
+  transform     : translateX(-50%);
+  font-family   : 'Orbitron', sans-serif;
+  font-size     : 8.5px;
+  font-weight   : 700;
+  color         : var(--c-green);
+  border        : 1px solid rgba(0,200,120,0.3);
+  padding       : 4px 12px;
+  border-radius : 3px;
+  letter-spacing: 2.5px;
+  white-space   : nowrap;
+  z-index       : 20;
+  pointer-events: none;
+}
+
+/* ── Camera Bottom Info Bar ────────────────────────────────────── */
+.cam-bottom-bar {
+  position        : absolute;
+  bottom          : 0;
+  left            : 0;
+  right           : 0;
+  height          : 24px;
+  background      : rgba(1,6,9,0.88);
+  border-top      : 1px solid var(--border-c);
+  display         : flex;
+  align-items     : center;
+  justify-content : space-between;
+  padding         : 0 16px;
+  z-index         : 20;
+  pointer-events  : none;
+}
+
+.cam-info {
+  font-size     : 9px;
+  color         : rgba(0,196,255,0.48);
+  letter-spacing: 1px;
+}
+
+.cam-model {
+  color: rgba(0,196,255,0.28);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   DOMINANT EMOTION STRIP
+════════════════════════════════════════════════════════════════ */
+.dom-strip {
+  display      : flex;
+  align-items  : center;
+  gap          : 16px;
+  background   : var(--bg-1);
+  border       : 1px solid var(--border-c);
+  border-radius: 10px;
+  padding      : 12px 22px;
+}
+
+.dom-label {
+  font-size     : 9px;
+  letter-spacing: 3.5px;
+  color         : rgba(0,196,255,0.38);
+  white-space   : nowrap;
+  flex-shrink   : 0;
+}
+
+.dom-divider {
+  width     : 1px;
+  height    : 24px;
+  background: rgba(0,196,255,0.2);
+  flex-shrink: 0;
+}
+
+/* Input dominant emotion — ID "emotion_text" tetap, hanya styling */
+.dom-value {
+  flex          : 1;
+  font-family   : 'Orbitron', sans-serif;
+  font-size     : 22px;
+  font-weight   : 900;
+  color         : var(--c-green);
+  text-shadow   : 0 0 22px var(--c-green);
+  background    : transparent;
+  border        : none;
+  outline       : none;
+  cursor        : default;
+  caret-color   : transparent;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  min-width     : 0;
+  padding       : 0;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   EMOTION ANALYSIS PANEL
+════════════════════════════════════════════════════════════════ */
+.emo-panel {
+  flex         : 0 0 380px;
+  background   : var(--bg-1);
+  border       : 1px solid var(--border-c);
+  border-radius: 14px;
+  overflow     : hidden;
+  box-shadow   : 0 24px 60px rgba(0,0,0,0.6),
+                 inset 0 1px 0 rgba(0,196,255,0.07);
+}
+
+/* ── Panel Header ──────────────────────────────────────────────── */
+.panel-hdr {
+  background   : var(--bg-2);
+  border-bottom: 1px solid var(--border-c);
+  padding      : 14px 18px;
+}
+
+.panel-title {
+  font-family   : 'Orbitron', sans-serif;
+  font-size     : 12px;
+  font-weight   : 700;
+  color         : var(--c-cyan);
+  letter-spacing: 3px;
+}
+
+.panel-sub {
+  font-size     : 9px;
+  color         : rgba(0,196,255,0.38);
+  letter-spacing: 2px;
+  margin-top    : 4px;
+}
+
+/* ── System Metrics Row ────────────────────────────────────────── */
+.sys-metrics {
+  display               : grid;
+  grid-template-columns : 1fr 1fr 1fr;
+  border-bottom         : 1px solid var(--border-c);
+}
+
+.metric {
+  padding     : 10px 0;
+  text-align  : center;
+  border-right: 1px solid var(--border-c);
+}
+
+.metric:last-child { border-right: none; }
+
+.metric-label {
+  font-size     : 8px;
+  color         : rgba(0,196,255,0.33);
+  letter-spacing: 1.5px;
+  margin-bottom : 3px;
+}
+
+.metric-val {
+  font-family : 'Orbitron', sans-serif;
+  font-size   : 13px;
+  color       : var(--c-cyan);
+  font-weight : 700;
+}
+
+/* ── Emotion List ──────────────────────────────────────────────── */
+.emo-list {
+  padding        : 10px 16px;
+  display        : flex;
+  flex-direction : column;
+  gap            : 4px;
+}
+
+.emo-row {
+  display    : flex;
+  align-items: center;
+  gap        : 10px;
+  padding    : 6px 8px;
+  border-radius: 6px;
+  cursor     : default;
+  transition : background 0.2s;
+}
+
+.emo-row:hover { background: rgba(0,196,255,0.04); }
+
+/* ── Emotion Color Dots ────────────────────────────────────────── */
+.emo-dot {
+  width        : 7px;
+  height       : 7px;
+  border-radius: 50%;
+  flex-shrink  : 0;
+}
+
+.angry-dot    { background: var(--c-red);   box-shadow: 0 0 5px var(--c-red);   }
+.neutral-dot  { background: var(--c-green); box-shadow: 0 0 5px var(--c-green); }
+.happy-dot    { background: var(--c-amber); box-shadow: 0 0 5px var(--c-amber); }
+.fear-dot     { background: var(--c-blue);  box-shadow: 0 0 5px var(--c-blue);  }
+.surprise-dot { background: var(--c-gold);  box-shadow: 0 0 5px var(--c-gold);  }
+.sad-dot      { background: var(--c-gray);  }
+.disgust-dot  { background: var(--c-pink);  box-shadow: 0 0 5px var(--c-pink);  }
+
+/* ── Emotion Name Labels ───────────────────────────────────────── */
+.emo-name {
+  font-size     : 9px;
+  font-weight   : 700;
+  min-width     : 62px;
+  letter-spacing: 1.5px;
+}
+
+.angry-name    { color: var(--c-red);   }
+.neutral-name  { color: var(--c-green); }
+.happy-name    { color: var(--c-amber); }
+.fear-name     { color: var(--c-blue);  }
+.surprise-name { color: var(--c-gold);  }
+.sad-name      { color: var(--c-gray);  }
+.disgust-name  { color: var(--c-pink);  }
+
+/* ════════════════════════════════════════════════════════════════
+   PROGRESS BAR — Custom Futuristic Styling
+   .bar-wrapper::after overlay membuat efek segmen LED di atas bar
+════════════════════════════════════════════════════════════════ */
+.bar-wrapper {
+  flex    : 1;
+  position: relative;
+}
+
+/* Garis segmen overlay — tampil di atas progress bar */
+.bar-wrapper::after {
+  content       : '';
+  position      : absolute;
+  inset         : 0;
+  background    : repeating-linear-gradient(
+    90deg,
+    transparent           0px,
+    transparent           5px,
+    rgba(2,9,16,0.55)    5px,
+    rgba(2,9,16,0.55)    6px
+  );
+  pointer-events: none;
+  z-index       : 2;
+}
+
+/* Reset browser default progress appearance */
+progress {
+  -webkit-appearance: none;
+  -moz-appearance   : none;
+  appearance        : none;
+  display           : block;
+  width             : 100%;
+  height            : 7px;
+  border            : none;
+  border-radius     : 2px;
+  background        : rgba(255,255,255,0.06);
+  overflow          : hidden;
+  position          : relative;
+  z-index           : 1;
+}
+
+/* Track (webkit) */
+progress::-webkit-progress-bar {
+  background   : rgba(255,255,255,0.06);
+  border-radius: 2px;
+}
+
+/* ── Progress value per emosi (webkit) — dengan glow di ujung ── */
+progress#Angry::-webkit-progress-value {
+  background   : var(--c-red);
+  box-shadow   : 3px 0 10px rgba(255,64,96,0.75);
+  transition   : width 0.22s ease;
+  border-radius: 2px;
+}
+progress#Neutral::-webkit-progress-value {
+  background   : var(--c-green);
+  box-shadow   : 3px 0 10px rgba(0,200,120,0.75);
+  transition   : width 0.22s ease;
+  border-radius: 2px;
+}
+progress#Happy::-webkit-progress-value {
+  background   : var(--c-amber);
+  box-shadow   : 3px 0 10px rgba(255,176,32,0.75);
+  transition   : width 0.22s ease;
+  border-radius: 2px;
+}
+progress#Fear::-webkit-progress-value {
+  background   : var(--c-blue);
+  box-shadow   : 3px 0 10px rgba(64,152,255,0.75);
+  transition   : width 0.22s ease;
+  border-radius: 2px;
+}
+progress#Surprise::-webkit-progress-value {
+  background   : var(--c-gold);
+  box-shadow   : 3px 0 10px rgba(200,160,0,0.75);
+  transition   : width 0.22s ease;
+  border-radius: 2px;
+}
+progress#Sad::-webkit-progress-value {
+  background   : var(--c-gray);
+  box-shadow   : 3px 0 6px rgba(122,136,152,0.5);
+  transition   : width 0.22s ease;
+  border-radius: 2px;
+}
+progress#Disgust::-webkit-progress-value {
+  background   : var(--c-pink);
+  box-shadow   : 3px 0 10px rgba(240,96,176,0.75);
+  transition   : width 0.22s ease;
+  border-radius: 2px;
+}
+
+/* ── Firefox ── */
+progress#Angry::-moz-progress-bar    { background: var(--c-red);   border-radius: 2px; }
+progress#Neutral::-moz-progress-bar  { background: var(--c-green); border-radius: 2px; }
+progress#Happy::-moz-progress-bar    { background: var(--c-amber); border-radius: 2px; }
+progress#Fear::-moz-progress-bar     { background: var(--c-blue);  border-radius: 2px; }
+progress#Surprise::-moz-progress-bar { background: var(--c-gold);  border-radius: 2px; }
+progress#Sad::-moz-progress-bar      { background: var(--c-gray);  border-radius: 2px; }
+progress#Disgust::-moz-progress-bar  { background: var(--c-pink);  border-radius: 2px; }
+
+/* ── Percentage Labels ─────────────────────────────────────────── */
+.emo-pct {
+  font-family         : 'Orbitron', sans-serif;
+  font-size           : 10px;
+  font-weight         : 700;
+  min-width           : 36px;
+  text-align          : right;
+  flex-shrink         : 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.angry-pct    { color: var(--c-red);   }
+.neutral-pct  { color: var(--c-green); }
+.happy-pct    { color: var(--c-amber); }
+.fear-pct     { color: var(--c-blue);  }
+.surprise-pct { color: var(--c-gold);  }
+.sad-pct      { color: var(--c-gray);  }
+.disgust-pct  { color: var(--c-pink);  }
+
+/* ── Panel Footer ──────────────────────────────────────────────── */
+.panel-footer {
+  border-top     : 1px solid rgba(0,196,255,0.08);
+  padding        : 10px 18px;
+  display        : flex;
+  justify-content: space-between;
+  align-items    : center;
+}
+
+.footer-text {
+  font-size     : 8px;
+  color         : rgba(0,196,255,0.22);
+  letter-spacing: 0.8px;
+}
+
+/* ── Sembunyikan elemen lama yang tidak dipakai ────────────────── */
+.App-logo   { display: none !important; }
+.App-header { display: none !important; }
+.Prediction { display: none !important; }
+
+/* ════════════════════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+════════════════════════════════════════════════════════════════ */
+
+/* Scan line bergerak dari atas ke bawah */
+@keyframes scanMove {
+  from { top: -2px; }
+  to   { top: calc(100% + 2px); }
+}
+
+/* Status dot berkedip menandakan koneksi aktif */
+@keyframes blinkDot {
+  0%, 78%, 100% { opacity: 1; }
+  83%, 93%      { opacity: 0; }
+}
+
+/* Icon brand berdenyut pelan */
+@keyframes iconPulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1.0; }
+}
