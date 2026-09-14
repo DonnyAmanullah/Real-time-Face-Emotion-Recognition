@@ -1,5 +1,4 @@
 # Realtime Facial Emotion Recognition
-<img align="center" alt="architecture" src="./Resources/HLD.png"/><br>
 
 # Introduction
 This repository demonstrates an end-to-end pipeline for real-time Facial emotion recognition application through full-stack development.
