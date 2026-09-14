@@ -5,3 +5,4 @@ tensorflow<2.16
 pandas
 pillow
 numpy<2
+setuptools
