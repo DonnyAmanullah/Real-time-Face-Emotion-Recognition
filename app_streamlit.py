@@ -153,7 +153,7 @@ st.markdown('<div class="sub-header">Aplikasi pendeteksi emosi wajah secara real
 # MODE 1: Webcam Real-Time
 # -------------------------------------------------------------
 if mode == "📹 Webcam Real-Time":
-    st.info("Klik tombol **Mulai Webcam** di bawah untuk memulai streaming kamera langsung dari perangkat Anda.")
+    st.info("💡 **Catatan Penggunaan:** Mode streaming OpenCV ini berjalan jika aplikasi diakses di laptop/PC lokal (`localhost`). Jika sedang dibuka melalui **Streamlit Cloud**, gunakan mode **📸 Ambil Foto (Snapshot)** untuk mengakses kamera browser Anda.")
     
     col_ctrl1, col_ctrl2 = st.columns([1, 4])
     with col_ctrl1:

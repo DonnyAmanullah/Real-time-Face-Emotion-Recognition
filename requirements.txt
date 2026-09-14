@@ -1,0 +1,7 @@
+streamlit
+opencv-python-headless
+fer==22.4.0
+tensorflow
+pandas
+pillow
+numpy<2
